@@ -1,13 +1,19 @@
-import * as cdk from 'aws-cdk-lib';
+import {
+  Stack, StackProps,
+  aws_lambda as lambda,
+} from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import * as sqs from 'aws-cdk-lib/aws-sqs';
+import * as path from 'path';
 
-export class CdkGitopsDemoStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+
+export class CdkGitopsDemoStack extends Stack {
+  constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    new sqs.Queue(this, 'Queue', {
-      fifo: true,
+    new lambda.Function(this, 'Func', {
+      runtime: lambda.Runtime.PYTHON_3_12,
+      code: lambda.Code.fromAsset(path.join(__dirname, '../lambda')),
+      handler: 'index.handler',
     });
 
 

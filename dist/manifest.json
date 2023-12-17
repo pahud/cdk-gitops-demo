@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/7b81488b16785634a5328b06444d8e5dcc42fb7bf7fee155431aa3498c2ef7da.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3562b8325678a5159a3f17ee7e212e7e296f8abed86be6941cd88e561cefa5e4.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -34,10 +34,16 @@
         "CdkGitopsDemoStack.assets"
       ],
       "metadata": {
-        "/CdkGitopsDemoStack/Queue/Resource": [
+        "/CdkGitopsDemoStack/Func/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "Queue4A7E3555"
+            "data": "FuncServiceRole49680D06"
+          }
+        ],
+        "/CdkGitopsDemoStack/Func/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Func217E03A4"
           }
         ],
         "/CdkGitopsDemoStack/CDKMetadata/Default": [
