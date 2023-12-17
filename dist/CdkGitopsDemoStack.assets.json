@@ -1,7 +1,20 @@
 {
   "version": "35.0.0",
   "files": {
-    "7b81488b16785634a5328b06444d8e5dcc42fb7bf7fee155431aa3498c2ef7da": {
+    "c5c964d0ab8b29f27cb57ad182e55372c7fa7baf92395f541a9038118f8fbc5e": {
+      "source": {
+        "path": "asset.c5c964d0ab8b29f27cb57ad182e55372c7fa7baf92395f541a9038118f8fbc5e",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "c5c964d0ab8b29f27cb57ad182e55372c7fa7baf92395f541a9038118f8fbc5e.zip",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    },
+    "40dd05fea14b24b6186702f0d2012c9e373b014ece840749739c72bfc49fc3bf": {
       "source": {
         "path": "CdkGitopsDemoStack.template.json",
         "packaging": "file"
@@ -9,7 +22,7 @@
       "destinations": {
         "current_account-current_region": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "7b81488b16785634a5328b06444d8e5dcc42fb7bf7fee155431aa3498c2ef7da.json",
+          "objectKey": "40dd05fea14b24b6186702f0d2012c9e373b014ece840749739c72bfc49fc3bf.json",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }

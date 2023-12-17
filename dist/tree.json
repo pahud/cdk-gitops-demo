@@ -8,27 +8,123 @@
         "id": "CdkGitopsDemoStack",
         "path": "CdkGitopsDemoStack",
         "children": {
-          "Queue": {
-            "id": "Queue",
-            "path": "CdkGitopsDemoStack/Queue",
+          "Func": {
+            "id": "Func",
+            "path": "CdkGitopsDemoStack/Func",
             "children": {
-              "Resource": {
-                "id": "Resource",
-                "path": "CdkGitopsDemoStack/Queue/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::SQS::Queue",
-                  "aws:cdk:cloudformation:props": {
-                    "fifoQueue": true
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "CdkGitopsDemoStack/Func/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "CdkGitopsDemoStack/Func/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.115.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CdkGitopsDemoStack/Func/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.115.0"
+                    }
                   }
                 },
                 "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_sqs.CfnQueue",
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.115.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "CdkGitopsDemoStack/Func/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "CdkGitopsDemoStack/Func/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.115.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "CdkGitopsDemoStack/Func/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.115.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.115.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "CdkGitopsDemoStack/Func/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "c5c964d0ab8b29f27cb57ad182e55372c7fa7baf92395f541a9038118f8fbc5e.zip"
+                    },
+                    "handler": "index.handler",
+                    "role": {
+                      "Fn::GetAtt": [
+                        "FuncServiceRole49680D06",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "python3.12"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
                   "version": "2.115.0"
                 }
               }
             },
             "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_sqs.Queue",
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
               "version": "2.115.0"
             }
           },
