@@ -1,0 +1,3 @@
+template-file-path: dist/CdkGitopsDemoStack.template.json
+parameters: {}
+tags: {}
