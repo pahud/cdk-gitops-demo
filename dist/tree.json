@@ -17,7 +17,9 @@
                 "path": "CdkGitopsDemoStack/Queue/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::SQS::Queue",
-                  "aws:cdk:cloudformation:props": {}
+                  "aws:cdk:cloudformation:props": {
+                    "fifoQueue": true
+                  }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_sqs.CfnQueue",

@@ -2,6 +2,9 @@
  "Resources": {
   "Queue4A7E3555": {
    "Type": "AWS::SQS::Queue",
+   "Properties": {
+    "FifoQueue": true
+   },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
@@ -11,7 +14,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/yXIyw2EMAwA0Vq4J4YgQQNUAFvAKiRGMrCOFidwQPTO7zRPU4IxFRSZ3UQ7P+mZetg/0bpJXesrf4G9TZhQNQM/OG51KCEt7rlNYE+RAh+Kg0cYJV/LAmow2ShEekkc6YfQvT0BBm7o3HIAAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/yXIQQ6DIBBA0bO4hxFMPIEnqB7AUJgmAzpEB+rCePemuvovvwNrezCNO0T7kPRCbzin4nxS7pBZNoHzVbGiGj584/prRMl19/cdMgcqlPlSnANClPbbGbAGTBOFSO+VC60I49MfaD20JnMAAAA="
    },
    "Metadata": {
     "aws:cdk:path": "CdkGitopsDemoStack/CDKMetadata/Default"
