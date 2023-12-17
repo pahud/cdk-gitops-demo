@@ -1,0 +1,92 @@
+schemaVersion: 2.0.0
+metadata:
+  name: aws-universal
+  version: 1.0.1
+  displayName: AWS Universal
+  description: Stack with AWS Universal Tooling
+  tags: ["aws", "al2"]
+  projectType: "aws"
+components:
+  - name: aws-runtime
+    container:
+      image: public.ecr.aws/aws-mde/universal-image:3.0
+      mountSources: true
+      volumeMounts:
+        - name: docker-store
+          path: /var/lib/docker
+  - name: docker-store
+    volume:
+      size: 16Gi
+commands:
+  # generate the debug log
+  - id: exec-env-debug
+    exec:
+      component: aws-runtime
+      commandLine: "env > /tmp/exec-env-debug.log"
+  # create $HOME/bin if not exists
+  - id: create-home-bin
+    exec:
+      component: aws-runtime
+      commandLine: "test -d $HOME/bin || mkdir $HOME/bin"
+  # upgrade to the latest aws-cdk
+  - id: upgrade-aws-cdk
+    exec:
+      component: aws-runtime
+      commandLine: "npm i -g aws-cdk"
+  # cdk init
+  - id: cdk-init
+    exec:
+      component: aws-runtime
+      commandLine: "cd ${PROJECT_SOURCE} && [ -f devfile.yaml ] && [ ! -f README.md ] &&
+        ( mv devfile.yaml .devfile.yaml && /usr/bin/cdk init -l typescript; mv .devfile.yaml devfile.yaml )"
+  # run `npx projen new` to initialize the project with projen
+  - id: npx-projen-new
+    exec:
+      component: aws-runtime
+      commandLine: "cd ${PROJECT_SOURCE} && npx projen new awscdk-app-ts"
+  # install the latest kubectl in $HOME/bin
+  - id: install-kubectl
+    exec:
+      component: aws-runtime
+      commandLine: "curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.28.3/2023-11-14/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl $HOME/bin/"
+      workingDir: /tmp
+  # update ~/.aws/config
+  - id: update-aws-config
+    exec:
+      component: aws-runtime
+      commandLine: | 
+        cat << EOF >> /home/mde-user/.aws/config
+
+        [default]
+        region = us-east-1
+        sso_session = sso
+        sso_account_id = 123456789012
+        sso_role_name = AdministratorAccess
+        output = json
+        [sso-session sso]
+        sso_start_url = https://your-start-url.awsapps.com/start
+        sso_region = us-east-1
+        sso_registration_scopes = sso:account:access
+        EOF
+
+  # generate ~/bin/mde-restart
+  - id: generate-mde-restart
+    exec:
+      component: aws-runtime
+      commandLine: | 
+        cat << EOF > /home/mde-user/bin/mde-restart && chmod a+x /home/mde-user/bin/mde-restart
+
+        #!/bin/bash
+
+        /aws/mde/mde start --location "${PROJECT_SOURCE##${PROJECTS_ROOT}/}/devfile.yaml"
+        EOF
+
+events:   
+  postStart:
+    - exec-env-debug
+    - create-home-bin
+    - update-aws-config
+    - generate-mde-restart
+    - upgrade-aws-cdk
+    - cdk-init
+    - install-kubectl
