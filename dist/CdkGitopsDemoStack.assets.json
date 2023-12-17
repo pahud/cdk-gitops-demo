@@ -1,0 +1,19 @@
+{
+  "version": "35.0.0",
+  "files": {
+    "07ba2985d6993a461653ae0b94417828a996690d6060113e9c0a9c2c7e877a27": {
+      "source": {
+        "path": "CdkGitopsDemoStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "07ba2985d6993a461653ae0b94417828a996690d6060113e9c0a9c2c7e877a27.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
