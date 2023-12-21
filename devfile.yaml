@@ -55,7 +55,7 @@ commands:
     exec:
       component: aws-runtime
       commandLine: | 
-        cat << EOF >> /home/mde-user/.aws/config
+        grep "\[default\]" ~/.aws/config || cat << EOF >> /home/mde-user/.aws/config
 
         [default]
         region = us-east-1
